@@ -1,0 +1,30 @@
+{% ckan_extends %}
+
+{% block primary_content %}
+<section class="mma-dataset-detail">
+
+  <span class="mma-tag">
+    {{ pkg.groups[0].title if pkg.groups else 'Dataset' }}
+  </span>
+
+  <h1>{{ pkg.title }}</h1>
+
+  {% if pkg.organization %}
+    <p class="org">
+      {{ pkg.organization.title }}
+    </p>
+  {% endif %}
+
+  {% if pkg.notes %}
+    <p class="description">
+      {{ pkg.notes }}
+    </p>
+  {% endif %}
+
+  <a class="mma-download" href="#resources">
+    Descargar archivos ({{ pkg.resources|length }})
+  </a>
+
+</section>
+{% endblock %}
+

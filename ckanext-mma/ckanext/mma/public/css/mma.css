@@ -1,0 +1,248 @@
+.mma-header {
+  background: #fff;
+  border-bottom: 1px solid #eee;
+}
+
+.mma-header-inner {
+  max-width: 1200px;
+  margin: auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mma-logo {
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-decoration: none;
+  color: #111;
+}
+
+.mma-logo-img {
+  height: 80px;      /* ajusta según diseño */
+  width: auto;
+  display: block;
+}
+
+
+.mma-nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.mma-nav a {
+  text-decoration: none;
+  color: #444;
+  font-size: 0.9rem;
+}
+
+.mma-nav a:hover {
+  color: #6f5cff;
+}
+
+.mma-actions a {
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: #6f5cff;
+}
+
+.mma-categories {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.mma-categories a {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #fff;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  text-decoration: none;
+  color: #444;
+  box-shadow: 0 6px 14px rgba(0,0,0,.06);
+}
+
+.mma-categories a:hover {
+  background: #6f5cff;
+  color: #fff;
+}
+
+.mma-popular {
+  margin: 5rem auto;
+  max-width: 1200px;
+  padding: 3rem;
+  border-radius: 32px;
+  background: radial-gradient(circle at top, #f0f3ff, #f8f8f8);
+  text-align: center;
+}
+
+.mma-popular h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.mma-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.mma-tabs button {
+  border: none;
+  background: transparent;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+}
+
+.mma-tabs .active {
+  background: #111;
+  color: #fff;
+}
+
+.mma-dataset-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.2rem;
+}
+
+.mma-card {
+  background: #fff;
+  padding: 1.4rem;
+  border-radius: 16px;
+  text-align: left;
+  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+}
+
+.mma-card h3 {
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.mma-card p {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.mma-view-all {
+  display: inline-block;
+  margin-top: 2rem;
+  text-decoration: none;
+  color: #6f5cff;
+  font-weight: 500;
+}
+
+.mma-search-top {
+  max-width: 900px;
+  margin: 1.5rem auto;
+}
+
+.mma-search-top form {
+  display: flex;
+  background: #fff;
+  border-radius: 999px;
+  box-shadow: 0 8px 25px rgba(0,0,0,.08);
+  overflow: hidden;
+}
+
+.mma-search-top input {
+  flex: 1;
+  border: none;
+  padding: 0.9rem 1.2rem;
+  font-size: 0.95rem;
+}
+
+.mma-search-top button {
+  border: none;
+  background: #6f5cff;
+  color: #fff;
+  padding: 0 1.5rem;
+}
+
+.mma-filters {
+  background: #fafafa;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.mma-filters h4 {
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.mma-filters ul {
+  list-style: none;
+  padding: 0;
+}
+
+.mma-filters li a {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  text-decoration: none;
+  color: #444;
+  padding: 0.3rem 0;
+}
+
+.mma-dataset-item {
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 0.8rem;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(0,0,0,.06);
+}
+
+.mma-dataset-item h3 {
+  font-size: 0.95rem;
+  margin-bottom: 0.3rem;
+}
+
+.mma-dataset-detail {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 16px;
+}
+
+.mma-tag {
+  display: inline-block;
+  background: #eef1ff;
+  color: #4b5cff;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+}
+
+.mma-download {
+  display: inline-block;
+  margin-top: 1rem;
+  background: #6f5cff;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.mma-code {
+  background: #111;
+  color: #eee;
+  padding: 1rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  overflow-x: auto;
+}
+
+.mma-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr 420px;
+  gap: 1.5rem;
+}
+

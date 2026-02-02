@@ -1,0 +1,112 @@
+# =====================================================
+# CKAN 2.11.4 – FULL runtime deps (pip, CLOSED SET)
+# Python 3.10
+# =====================================================
+
+# ---- Core ----
+ckan==2.11.4
+setuptools<81
+
+# ---- CLI / entrypoints ----
+click
+blinker
+
+# ---- Flask stack ----
+Flask
+Flask-Login
+Flask-Babel
+Flask-WTF
+Werkzeug
+Jinja2
+itsdangerous
+WTForms
+
+# ---- ORM / DB ----
+SQLAlchemy<2.0
+alembic
+psycopg2
+zope.sqlalchemy
+
+# ---- Auth / security (legacy CKAN) ----
+passlib
+python-openid
+repoze.who
+repoze.who.plugins.sa
+authlib
+python-jwt
+PyJWT
+
+# ---- Pylons / WSGI legacy ----
+Paste
+PasteDeploy
+Pylons
+Routes
+WebHelpers2
+repoze.lru
+Beaker
+
+# ---- Cache / sessions ----
+redis
+
+# ---- Config / declaration (CKAN 2.11+) ----
+msgspec
+
+# ---- Dates / timezones ----
+tzlocal
+pytz
+
+# ---- HTML / helpers ----
+dominate
+Markdown
+bleach
+
+# ---- Assets (JS/CSS) ----
+webassets
+cssmin
+jsmin
+
+# ---- i18n ----
+Babel
+polib
+
+# ---- Config / parsing ----
+PyYAML
+python-dateutil
+
+# ---- HTTP stack ----
+requests
+urllib3
+idna
+charset-normalizer
+certifi
+
+# ---- JSON / validation ----
+jsonschema
+attrs
+
+# ---- Utilities ----
+six
+importlib-metadata
+
+# ---- Crypto ----
+cryptography
+
+# ---- Search / Solr ----
+pysolr
+lxml
+pyparsing
+
+# ---- Flask sessions ----
+Flask-Session
+
+# ---- File type detection ----
+python-magic
+
+# ---- Background jobs ----
+rq==1.13.0
+
+# ---- Feeds (RSS / Atom) ----
+feedgen
+
+# ---- Datastore ----
+sqlparse

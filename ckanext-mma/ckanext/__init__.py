@@ -1,0 +1,2 @@
+# ckanext namespace package
+

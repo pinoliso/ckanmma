@@ -1,0 +1,23 @@
+{% ckan_extends %}
+
+{% block primary_content %}
+<div class="mma-search-top">
+  <form action="{{ h.url_for('dataset.search') }}">
+    <input
+      type="text"
+      name="q"
+      value="{{ request.params.get('q','') }}"
+      placeholder="Search for datasets"
+    >
+    <button type="submit">🔍</button>
+  </form>
+</div>
+{% endblock %}
+
+{% block search_facets %}
+  {{ super() }}
+{% endblock %}
+
+{% block search_results %}
+  {{ super() }}
+{% endblock %}

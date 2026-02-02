@@ -1,0 +1,30 @@
+{% ckan_extends %}
+
+{% block page %}
+
+  {% block header %}
+    {{ super() }}
+  {% endblock %}
+
+  {% block breadcrumb %}
+    {# ❌ eliminamos breadcrumb por defecto #}
+  {% endblock %}
+
+  {# ── decidir wrapper según página ── #}
+  {% if c.controller == 'package' and c.action in ['search', 'read'] %}
+    {% set wrapper_class = 'mma-page-full' %}
+  {% else %}
+    {% set wrapper_class = 'container' %}
+  {% endif %}
+
+  <main>
+    {% block content %}
+      {{ super() }}
+    {% endblock %}
+  </main>
+
+  {% block footer %}
+    {{ super() }}
+  {% endblock %}
+
+{% endblock %}

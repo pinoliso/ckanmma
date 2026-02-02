@@ -1,0 +1,62 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    container_name: ckan-db
+    environment:
+      POSTGRES_DB: ckan
+      POSTGRES_USER: ckan
+      POSTGRES_PASSWORD: ckan
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ckan"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  solr:
+    image: ckan/ckan-solr:2.11-solr9.9-spatial
+    container_name: ckan-solr
+    ports:
+      - "8983:8983"
+
+  redis:
+    image: redis:7
+    container_name: ckan-redis
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+
+  ckan:
+    build: .
+    container_name: ckan-app
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      solr:
+        condition: service_started
+    environment:
+      CKAN_INI: /etc/ckan/default/ckan.ini
+    volumes:
+      - ./ckan.ini:/etc/ckan/default/ckan.ini
+      - ./ckanext-mma:/usr/lib/ckan/venv/src/ckanext-mma
+      - ckan_storage:/var/lib/ckan
+      - ckan_logs:/var/log/ckan
+    ports:
+      - "5000:5000"
+    command: >
+      bash -c "
+      echo '=== Initializing CKAN DB ===' &&
+      ckan -c /etc/ckan/default/ckan.ini db init &&
+      echo '=== Starting CKAN DEV server ===' &&
+      ckan -c /etc/ckan/default/ckan.ini run --host 0.0.0.0 --port 5000
+      "
+
+volumes:
+  pg_data:
+  redis_data:
+  ckan_storage:
+  ckan_logs:

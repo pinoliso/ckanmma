@@ -1,0 +1,84 @@
+{% ckan_extends %}
+
+{% block content %}
+<section class="sg-hero">
+  <div class="sg-hero-inner">
+
+    <h1>
+      <span class="bold">Portal de</span><br>
+      <span class="light">datos abiertos</span>
+    </h1>
+
+    <p class="subtitle">
+      Explora datasets nacionales y accede a APIs para desarrollo 222.
+    </p>
+
+    <form class="search-box" action="{{ h.url_for('dataset.search') }}">
+      <input
+        type="text"
+        name="q"
+        placeholder="Busca datasets, por ejemplo: Transporte, Salud"
+      >
+      <button type="submit">
+        🔍
+      </button>
+    </form>
+
+    <div class="mma-categories">
+      <a href="{{ h.url_for('dataset.search', q='salud') }}">
+        🏥 <span>Emisiones al agua</span>
+      </a>
+      <a href="{{ h.url_for('dataset.search', q='educacion') }}">
+        🎓 <span>Emisiones al aire</span>
+      </a>
+      <a href="{{ h.url_for('dataset.search', q='transporte') }}">
+        🚍 <span>Otros registros de carácter ambiental</span>
+      </a>
+      <a href="{{ h.url_for('dataset.search', q='medio ambiente') }}">
+        🌱 <span>Residuos</span>
+      </a>
+      <a href="{{ h.url_for('dataset.search', q='economia') }}">
+        💼 <span>Transferencias fuer de sitio</span>
+      </a>
+    </div>
+
+  </div>
+
+  <div class="wave"></div>
+
+  <section class="mma-popular">
+  <h2>Datasets más utilizados</h2>
+
+  <div class="mma-tabs">
+    <button class="active">Últimas 24 horas</button>
+    <button>Todo el tiempo</button>
+  </div>
+
+  <div class="mma-dataset-grid">
+    <div class="mma-card">
+      <h3>Pronóstico del tiempo 24h</h3>
+      <p>1.6M llamadas API · 19 descargas</p>
+    </div>
+
+    <div class="mma-card">
+      <h3>Calidad del aire PM2.5</h3>
+      <p>91.5K llamadas API · 30 descargas</p>
+    </div>
+
+    <div class="mma-card">
+      <h3>Casos COVID-19 por semana</h3>
+      <p>6.9K llamadas API · 58 descargas</p>
+    </div>
+  </div>
+
+  <a class="mma-view-all" href="{{ h.url_for('dataset.search') }}">
+    Ver todos los datasets →
+  </a>
+</section>
+
+
+</section>
+
+
+{% endblock %}
+

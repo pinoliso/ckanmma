@@ -1,0 +1,31 @@
+{% ckan_extends %}
+
+{% block header_wrapper %}
+<header class="mma-header">
+  <div class="mma-header-inner">
+
+    <a href="{{ h.url_for('home.index') }}" class="mma-logo">
+      <img
+        src="{{ h.url_for_static('/images/logo.png') }}" class="mma-logo-img"
+        alt="MMA Datos"
+      >
+    </a>
+
+    <nav class="mma-nav">
+      <a href="{{ h.url_for('dataset.search') }}">Datasets</a>
+      <a href="{{ h.url_for('organization.index') }}">Organizaciones</a>
+      <a href="{{ h.url_for('group.index') }}">Categorías</a>
+      <a href="/about">Acerca de</a>
+    </nav>
+
+    <div class="mma-actions">
+      {% if c.user %}
+        <a href="{{ h.url_for('dashboard.index') }}">Mi cuenta</a>
+      {% else %}
+        <a href="{{ h.url_for('user.login') }}">Ingresar</a>
+      {% endif %}
+    </div>
+
+  </div>
+</header>
+{% endblock %}

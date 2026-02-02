@@ -1,0 +1,2 @@
+[ckan.plugins]
+mma = ckanext.mma.plugin:MmaPlugin

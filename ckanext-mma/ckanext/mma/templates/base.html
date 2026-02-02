@@ -1,0 +1,7 @@
+{% ckan_extends %}
+
+{% block styles %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ h.url_for_static('/css/hero.css') }}">
+  <link rel="stylesheet" href="{{ h.url_for_static('/css/mma.css') }}">
+{% endblock %}
