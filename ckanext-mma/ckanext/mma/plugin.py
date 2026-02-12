@@ -1,6 +1,7 @@
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 
+
 class MmaPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
 

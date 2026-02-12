@@ -41,6 +41,16 @@
   overflow: hidden;
 }
 
+.search-box2 {
+  display: flex;
+  max-width: 90%;
+  margin: 0 auto 2rem;
+  background: #fff;
+  border-radius: 999px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.08);
+  overflow: hidden;
+}
+
 .search-box input {
   flex: 1;
   border: none;

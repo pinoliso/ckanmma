@@ -50,6 +50,8 @@ services:
     command: >
       bash -c "
       echo '=== Initializing CKAN DB ===' &&
+      cd /usr/lib/ckan/venv/src/ckanext-mma &&
+      pip install -e . && 
       ckan -c /etc/ckan/default/ckan.ini db init &&
       echo '=== Starting CKAN DEV server ===' &&
       ckan -c /etc/ckan/default/ckan.ini run --host 0.0.0.0 --port 5000

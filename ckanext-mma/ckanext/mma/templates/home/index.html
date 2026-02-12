@@ -10,7 +10,7 @@
     </h1>
 
     <p class="subtitle">
-      Explora datasets nacionales y accede a APIs para desarrollo 222.
+      Explora datasets nacionales y accede a APIs para desarrollo 2222.
     </p>
 
     <form class="search-box" action="{{ h.url_for('dataset.search') }}">
@@ -43,8 +43,6 @@
     </div>
 
   </div>
-
-  <div class="wave"></div>
 
   <section class="mma-popular">
   <h2>Datasets más utilizados</h2>
@@ -79,6 +77,8 @@
 
 </section>
 
-
 {% endblock %}
 
+{% block footer %}
+  {% snippet "snippets/footer.html" %}
+{% endblock %}

@@ -1,22 +1,7 @@
 {% ckan_extends %}
 
 {% block facet_list %}
-<aside class="mma-filters">
-
-  {% if facet_title %}
-    <h4>{{ facet_title }}</h4>
-  {% endif %}
-
-  <ul>
-    {% for item in items %}
-      <li>
-        <a href="{{ item.url }}">
-          {{ item.display_name }}
-          <span>{{ item.count }}</span>
-        </a>
-      </li>
-    {% endfor %}
-  </ul>
-
-</aside>
+<div class="mma-facet-group">
+  {{ super() }}
+</div>
 {% endblock %}

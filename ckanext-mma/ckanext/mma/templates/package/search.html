@@ -1,23 +1,30 @@
 {% ckan_extends %}
 
 {% block primary_content %}
-<div class="mma-search-top">
-  <form action="{{ h.url_for('dataset.search') }}">
-    <input
-      type="text"
-      name="q"
-      value="{{ request.args.get('q', '') }}"
-      placeholder="Search for datasets"
-    >
-    <button type="submit">🔍</button>
-  </form>
+
+
+
+<main class="mma-results">
+    {{ super() }}
+  </main>
+
+{% endblock %}
+
+{% block package_search_form %}
+<div class="mma-search-top2">
+  <form class="search-box" style="max-width:90% !important" action="{{ h.url_for('dataset.search') }}">
+      <input
+        type="text"
+        name="q"
+        placeholder="Busca datasets, por ejemplo: Transporte, Salud"
+      >
+      <button type="submit">
+        🔍
+      </button>
+    </form>
 </div>
 {% endblock %}
 
-{% block search_facets %}
-  {{ super() }}
-{% endblock %}
-
-{% block search_results %}
-  {{ super() }}
+{% block footer %}
+  {% snippet "snippets/footer.html" %}
 {% endblock %}

@@ -1,15 +1,25 @@
 {% ckan_extends %}
 
 {% block package_item %}
-<div class="mma-dataset-item">
+
+<div class="mma-dataset-card">
+
   <h3>
-    <a href="{{ h.url_for('dataset.read', id=pkg.name) }}">
-      {{ pkg.title }}
+    <a href="{{ h.url_for('dataset.read', id=package.name) }}">
+      {{ package.title }}
     </a>
   </h3>
 
-  <p class="meta">
-    {{ pkg.organization.title if pkg.organization else '' }}
-  </p>
+  {% if package.organization %}
+    <p class="mma-org">{{ package.organization.title }}</p>
+  {% endif %}
+
+  {% if package.notes %}
+    <p class="mma-desc">
+      {{ package.notes|truncate(160) }}
+    </p>
+  {% endif %}
+
 </div>
+
 {% endblock %}
