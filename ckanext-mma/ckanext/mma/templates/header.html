@@ -20,7 +20,7 @@
 
     <div class="mma-actions">
       {% if c.user %}
-        <a href="{{ h.url_for('dashboard.index') }}">Mi cuenta</a>
+        <a href="{{ h.url_for('dashboard.datasets') }}"><i class="fa fa-users"></i> Mi cuenta</a>
       {% else %}
         <a href="{{ h.url_for('user.login') }}">Ingresar</a>
       {% endif %}

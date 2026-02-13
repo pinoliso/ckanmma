@@ -57,6 +57,7 @@ pytz
 
 # ---- HTML / helpers ----
 dominate
+MarkupSafe>=2.0,<3.0
 Markdown
 bleach
 
