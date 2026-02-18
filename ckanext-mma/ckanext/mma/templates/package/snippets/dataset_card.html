@@ -1,0 +1,25 @@
+<div class="mma-dataset-card">
+
+  <h5>
+    <a href="{{ h.url_for('dataset.read', id=dataset.name) }}">
+      {{ dataset.title }}
+    </a>
+  </h5>
+
+  {% if dataset.notes %}
+    <p class="mma-description">
+      {{ h.markdown_extract(dataset.notes, extract_length=180) }}
+    </p>
+  {% endif %}
+
+  <div class="mma-meta">
+    <span>
+      {{ dataset.organization.title if dataset.organization }}
+    </span>
+
+    {% if dataset.metadata_modified %}
+      <span>{{ dataset.metadata_modified[:10] }}</span>
+    {% endif %}
+  </div>
+
+</div>

@@ -1,0 +1,64 @@
+<div class="mma-search-header">
+
+  <div class="mma-search-container">
+
+    <form action="{{ h.url_for('dataset.search') }}" method="get">
+
+      <!-- Mantener filtros activos -->
+      {% for key, value in request.args.items() %}
+        {% if key != 'q' and key != 'page' %}
+          <input type="hidden" name="{{ key }}" value="{{ value }}">
+        {% endif %}
+      {% endfor %}
+
+      <div class="input-group input-group-lg">
+
+        <input
+          type="text"
+          name="q"
+          value="{{ request.args.get('q', '') }}"
+          class="form-control"
+          placeholder="Search for datasets">
+
+        <button class="btn btn-primary" type="submit">
+          Search
+        </button>
+
+      </div>
+    </form>
+
+    <!-- Contador -->
+    {% if page %}
+      <div class="mma-search-count mt-3">
+        {{ page.item_count }} datasets found
+      </div>
+    {% endif %}
+
+    <!-- Orden -->
+    <div class="mma-sort mt-2">
+      <form method="get" action="{{ h.url_for('dataset.search') }}">
+
+        {% for key, value in request.args.items() %}
+          {% if key != 'sort' %}
+            <input type="hidden" name="{{ key }}" value="{{ value }}">
+          {% endif %}
+        {% endfor %}
+
+        <select name="sort" class="form-select w-auto d-inline" onchange="this.form.submit()">
+          <option value="">Sort by relevance</option>
+          <option value="metadata_modified desc"
+            {% if request.args.get('sort') == 'metadata_modified desc' %}selected{% endif %}>
+            Most recent
+          </option>
+          <option value="title_string asc"
+            {% if request.args.get('sort') == 'title_string asc' %}selected{% endif %}>
+            Title A–Z
+          </option>
+        </select>
+
+      </form>
+    </div>
+
+  </div>
+
+</div>

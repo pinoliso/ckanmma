@@ -1,26 +1,45 @@
 {% ckan_extends %}
 
-{% block primary_content %}
+{% block main_content %}
 
+<div class="mma-search-fullwidth">
 
+  <!-- Header superior -->
+  <div class="mma-top-search">
+    {% block form %}
+      {{ super() }}
+    {% endblock %}
+  </div>
 
-<main class="mma-results">
-    {{ super() }}
-  </main>
+  <!-- Layout principal -->
+  <div class="mma-layout">
 
-{% endblock %}
+    <!-- Sidebar -->
+    <aside class="mma-sidebar">
 
-{% block package_search_form %}
-<div class="mma-search-top2">
-  <form class="search-box" style="max-width:90% !important" action="{{ h.url_for('dataset.search') }}">
-      <input
-        type="text"
-        name="q"
-        placeholder="Busca datasets, por ejemplo: Transporte, Salud"
-      >
-      <button type="submit">
-        🔍
-      </button>
-    </form>
+      <div class="mma-count">
+        {{ page.item_count }} datasets found
+      </div>
+
+      {% for pkg in page.items %}
+        <div class="mma-result-item">
+          <a href="{{ h.url_for('%s.read' % dataset_type, id=pkg.name) }}">
+            <h5>{{ pkg.title }}</h5>
+          </a>
+        </div>
+      {% endfor %}
+
+    </aside>
+
+    <!-- Panel derecho -->
+    <section class="mma-detail-panel">
+      <div class="mma-placeholder">
+        Select a dataset
+      </div>
+    </section>
+
+  </div>
+
 </div>
+
 {% endblock %}

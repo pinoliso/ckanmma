@@ -1,0 +1,59 @@
+{% if facets %}
+<h3>Cantidad {{ facets.items() | length }}</h3>
+<div class="mma-facets">
+
+  {% for facet_name, facet_items in facets.items() %}
+
+    {% if facet_items %}
+
+      <div class="mma-facet-block mb-4">
+
+        <h6 class="mma-facet-title text-uppercase">
+          {{ facet_name | replace('_', ' ') | capitalize }}
+        </h6>
+
+        <ul class="list-unstyled">
+
+          {% for item in facet_items %}
+
+            {% set current_values = request.args.getlist(facet_name) %}
+            {% set is_active = item.name in current_values %}
+
+            <li class="mma-facet-item d-flex justify-content-between">
+
+              {% if is_active %}
+
+                <!-- Quitar filtro -->
+                <a href="{{ h.remove_url_param(facet_name, item.name) }}"
+                   class="mma-facet-active">
+                  {{ item.title }}
+                </a>
+
+              {% else %}
+
+                <!-- Agregar filtro -->
+                <a href="{{ h.add_url_param(facet_name, item.name) }}">
+                  {{ item.title }}
+                </a>
+
+              {% endif %}
+
+              <span class="mma-facet-count">
+                {{ item.count }}
+              </span>
+
+            </li>
+
+          {% endfor %}
+
+        </ul>
+
+      </div>
+
+    {% endif %}
+
+  {% endfor %}
+
+</div>
+
+{% endif %}
