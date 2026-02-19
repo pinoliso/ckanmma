@@ -33,8 +33,6 @@
 
 .search-box {
   display: flex;
-  max-width: 520px;
-  margin: 0 auto 2rem;
   background: #fff;
   border-radius: 999px;
   box-shadow: 0 10px 25px rgba(0,0,0,.08);

@@ -2,44 +2,343 @@
 
 {% block main_content %}
 
-<div class="mma-search-fullwidth">
+{% set current_sort = request.args.get('sort', 'score desc, metadata_modified desc') %}
 
-  <!-- Header superior -->
-  <div class="mma-top-search">
-    {% block form %}
-      {{ super() }}
-    {% endblock %}
-  </div>
+<div class="mma-search-full">
 
-  <!-- Layout principal -->
-  <div class="mma-layout">
+  <!-- =========================
+       TOOLBAR (search + filters)
+       ========================= -->
+  <div class="mma-toolbar">
 
-    <!-- Sidebar -->
-    <aside class="mma-sidebar">
+    <div class="mma-toolbar-top">
+      <div class="mma-brand-space"></div>
 
-      <div class="mma-count">
-        {{ page.item_count }} datasets found
+      <div class="mma-search-wrap">
+        {% block form %}
+
+          <form class="search-box" action="{{ h.url_for('dataset.search') }}">
+            {# Preservar filtros actuales, excepto q y page #}
+            {% for k, v in request.args.items() %}
+              {% if k != 'q' and k != 'page' %}
+                <input type="hidden" name="{{ k }}" value="{{ v }}">
+              {% endif %}
+            {% endfor %}
+            <input
+              type="text"
+              name="q"
+              placeholder="Busca datasets, por ejemplo: Transporte, Salud"
+            >
+            <button type="submit">
+              🔍
+            </button>
+          </form>
+        {% endblock %}
       </div>
 
-      {% for pkg in page.items %}
-        <div class="mma-result-item">
-          <a href="{{ h.url_for('%s.read' % dataset_type, id=pkg.name) }}">
-            <h5>{{ pkg.title }}</h5>
-          </a>
+      <div class="mma-toolbar-right"></div>
+    </div>
+
+    <div class="mma-toolbar-filters">
+      <div class="mma-filter-row">
+
+        <!-- Topics (groups facet) -->
+        <div class="mma-filter-group">
+          <label class="mma-filter-label">Topics</label>
+          <select class="mma-select mmaFacetSelect" data-facet="groups">
+            <option value="">All</option>
+            {% if search_facets and search_facets.get('groups') %}
+              {% for it in search_facets.get('groups').get('items', []) %}
+                <option value="{{ it.get('name') }}" {% if it.get('active') %}selected{% endif %}>
+                  {{ it.get('display_name', it.get('name')) }}
+                </option>
+              {% endfor %}
+            {% endif %}
+          </select>
         </div>
-      {% endfor %}
+
+        <!-- Formats (res_format facet) -->
+        <div class="mma-filter-group">
+          <label class="mma-filter-label">Formats</label>
+          <select class="mma-select mmaFacetSelect" data-facet="res_format">
+            <option value="">All</option>
+            {% if search_facets and search_facets.get('res_format') %}
+              {% for it in search_facets.get('res_format').get('items', []) %}
+                <option value="{{ it.get('name') }}" {% if it.get('active') %}selected{% endif %}>
+                  {{ it.get('display_name', it.get('name')) }}
+                </option>
+              {% endfor %}
+            {% endif %}
+          </select>
+        </div>
+
+        <!-- Agencies (organization facet) -->
+        <div class="mma-filter-group">
+          <label class="mma-filter-label">Agencies</label>
+          <select class="mma-select mmaFacetSelect" data-facet="organization">
+            <option value="">All</option>
+            {% if search_facets and search_facets.get('organization') %}
+              {% for it in search_facets.get('organization').get('items', []) %}
+                <option value="{{ it.get('name') }}" {% if it.get('active') %}selected{% endif %}>
+                  {{ it.get('display_name', it.get('name')) }}
+                </option>
+              {% endfor %}
+            {% endif %}
+          </select>
+        </div>
+
+        <!-- Sort -->
+        <div class="mma-filter-group mma-filter-sort">
+          <label class="mma-filter-label">Sort by</label>
+          <select class="mma-select" id="mmaSort">
+            <option value="score desc, metadata_modified desc"
+              {% if current_sort == 'score desc, metadata_modified desc' %}selected{% endif %}>
+              Relevance
+            </option>
+            <option value="metadata_modified desc"
+              {% if current_sort == 'metadata_modified desc' %}selected{% endif %}>
+              Last updated
+            </option>
+            <option value="title_string asc"
+              {% if current_sort == 'title_string asc' %}selected{% endif %}>
+              Title (A–Z)
+            </option>
+            <option value="title_string desc"
+              {% if current_sort == 'title_string desc' %}selected{% endif %}>
+              Title (Z–A)
+            </option>
+          </select>
+        </div>
+
+        <!-- Clear -->
+        <a class="mma-clear-filters" href="{{ h.url_for('%s.search' % dataset_type) }}">
+          Clear filters
+        </a>
+
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       LAYOUT
+       ========================= -->
+  <div class="mma-layout">
+
+    <!-- LEFT: list of found datasets -->
+    <aside class="mma-left">
+
+      <div class="mma-count">{{ page.item_count }} datasets found</div>
+
+      {% if page.items %}
+        <div class="mma-found-list">
+          {% for pkg in page.items %}
+            <button type="button"
+                    class="mma-found-item"
+                    data-dataset-id="{{ pkg.name }}">
+              <div class="mma-found-title">{{ pkg.title or pkg.name }}</div>
+
+              <div class="mma-found-meta">
+                {% if pkg.organization %}
+                  <span>{{ pkg.organization.title }}</span>
+                {% endif %}
+                {% if pkg.metadata_modified %}
+                  <span>Updated: {{ pkg.metadata_modified }}</span>
+                {% endif %}
+              </div>
+            </button>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="mma-empty">No datasets found</div>
+      {% endif %}
+
+      {% if page.page_count and page.page_count > 1 %}
+        <div class="mma-pagination">
+          {% if page.previous_page %}
+            <a class="mma-page-link" href="{{ page.previous_page_url }}">Previous</a>
+          {% else %}
+            <span class="mma-page-link is-disabled">Previous</span>
+          {% endif %}
+
+          <span class="mma-page-status">Page {{ page.page }} of {{ page.page_count }}</span>
+
+          {% if page.next_page %}
+            <a class="mma-page-link" href="{{ page.next_page_url }}">Next</a>
+          {% else %}
+            <span class="mma-page-link is-disabled">Next</span>
+          {% endif %}
+        </div>
+      {% endif %}
 
     </aside>
 
-    <!-- Panel derecho -->
-    <section class="mma-detail-panel">
-      <div class="mma-placeholder">
+
+    <!-- RIGHT: dataset detail card -->
+    <section class="mma-right">
+      <div id="mmaDetail" class="mma-detail-placeholder">
         Select a dataset
       </div>
     </section>
 
   </div>
-
 </div>
+
+
+<!-- =========================
+     JS (filters + detail via API)
+     ========================= -->
+<script>
+(function () {
+
+  function updateQuery(params) {
+    var url = new URL(window.location.href);
+    Object.keys(params).forEach(function (k) {
+      var v = params[k];
+      if (v === null || v === undefined || v === '') url.searchParams.delete(k);
+      else url.searchParams.set(k, v);
+    });
+    url.searchParams.delete('page');
+    window.location.href = url.toString();
+  }
+
+  // ORDER BY
+  var sortSel = document.getElementById('mmaSort');
+  if (sortSel) {
+    sortSel.addEventListener('change', function (e) {
+      updateQuery({ sort: e.target.value });
+    });
+  }
+
+  // FACET SELECTS (groups, organization, res_format)
+  var facetSelects = document.querySelectorAll('.mmaFacetSelect');
+  for (var i = 0; i < facetSelects.length; i++) {
+    facetSelects[i].addEventListener('change', function (e) {
+      var facetName = e.target.getAttribute('data-facet');
+      var obj = {};
+      obj[facetName] = e.target.value;
+      updateQuery(obj);
+    });
+  }
+
+  // ===== Detail rendering =====
+  function escapeHtml(s) {
+    return (s || '').toString().replace(/[&<>"']/g, function (c) {
+      return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]);
+    });
+  }
+
+  function renderDetail(ds) {
+    var title = ds.title || ds.name;
+    var orgTitle = (ds.organization && ds.organization.title) ? ds.organization.title : '';
+    var orgName  = (ds.organization && ds.organization.name) ? ds.organization.name : '';
+    var updated  = ds.metadata_modified || '';
+    var license  = ds.license_title || '';
+    var notes    = ds.notes || '';
+
+    // chip (usa primer group si existe)
+    var chip = 'Dataset';
+    if (ds.groups && ds.groups.length) chip = ds.groups[0].title || ds.groups[0].name;
+
+    // breadcrumb (simple)
+    var breadcrumb = 'Datasets';
+    if (chip && chip !== 'Dataset') breadcrumb = 'Topic: <span>' + escapeHtml(chip) + '</span>  ›  Dataset';
+
+    // botón principal: primer recurso
+    var primaryUrl = '';
+    var primaryLabel = 'Download';
+    if (ds.resources && ds.resources.length) {
+      primaryUrl = ds.resources[0].url || '';
+      primaryLabel = ds.resources[0].format ? ('Download ' + ds.resources[0].format) : 'Download file';
+    }
+
+    var html = '';
+    html += '<div class="mma-detail-card">';
+    html += '  <div class="mma-breadcrumb">' + breadcrumb + '</div>';
+
+    html += '  <div class="mma-ds-topline">';
+    html += '    <div class="mma-chip">' + escapeHtml(chip) + '</div>';
+    html += '    <div class="mma-status">Active</div>';
+    html += '  </div>';
+
+    html += '  <h2 class="mma-ds-title">' + escapeHtml(title) + '</h2>';
+
+    html += '  <div class="mma-ds-lines">';
+    if (updated) html += '    <div>Last updated: ' + escapeHtml(updated) + '</div>';
+    if (orgTitle) html += '    <div><a class="mma-link" href="/organization/' + escapeHtml(orgName) + '">' + escapeHtml(orgTitle) + '</a></div>';
+    if (license) html += '    <div>License: ' + escapeHtml(license) + '</div>';
+    if (notes) html += '    <div>' + escapeHtml(notes).slice(0, 320) + (notes.length > 320 ? '…' : '') + '</div>';
+    html += '  </div>';
+
+    html += '  <div class="mma-actions">';
+    if (primaryUrl) html += '    <a class="mma-btn mma-btn-primary" href="' + escapeHtml(primaryUrl) + '" target="_blank" rel="noreferrer">' + escapeHtml(primaryLabel) + '</a>';
+    html += '    <a class="mma-btn" href="/dataset/' + escapeHtml(ds.name) + '">Open dataset page</a>';
+    html += '  </div>';
+
+    // Resources
+    html += '  <div class="mma-section">';
+    html += '    <h4>Resources</h4>';
+    if (ds.resources && ds.resources.length) {
+      for (var i = 0; i < ds.resources.length; i++) {
+        var r = ds.resources[i];
+        html += '    <div class="mma-res-item">';
+        html += '      <div class="mma-res-title">' + escapeHtml(r.name || r.id) +
+                (r.format ? ' <span class="mma-res-format">' + escapeHtml(r.format) + '</span>' : '') +
+                '</div>';
+        if (r.description) html += '      <div class="mma-res-desc">' + escapeHtml(r.description) + '</div>';
+        html += '      <div class="mma-res-links">';
+        if (r.url) html += '        <a class="mma-link" href="' + escapeHtml(r.url) + '" target="_blank" rel="noreferrer">Open</a>';
+        html += '      </div>';
+        html += '    </div>';
+      }
+    } else {
+      html += '    <div class="mma-empty">No resources</div>';
+    }
+    html += '  </div>';
+
+    html += '</div>';
+    return html;
+  }
+
+  async function loadDataset(id) {
+    var box = document.getElementById('mmaDetail');
+    box.classList.remove('mma-detail-placeholder');
+    box.innerHTML = '<div class="mma-loading">Loading…</div>';
+
+    try {
+      var res = await fetch('/api/3/action/package_show?id=' + encodeURIComponent(id), { credentials: 'same-origin' });
+      var json = await res.json();
+      if (!json || !json.success) {
+        box.innerHTML = '<div class="mma-empty">Could not load dataset</div>';
+        return;
+      }
+      box.innerHTML = renderDetail(json.result);
+    } catch (e) {
+      box.innerHTML = '<div class="mma-empty">Error loading dataset</div>';
+    }
+  }
+
+  // LEFT clicks
+  var items = document.querySelectorAll('.mma-found-item');
+  for (var i = 0; i < items.length; i++) {
+    items[i].addEventListener('click', function (e) {
+      var all = document.querySelectorAll('.mma-found-item');
+      for (var j = 0; j < all.length; j++) all[j].classList.remove('is-active');
+      e.currentTarget.classList.add('is-active');
+
+      var id = e.currentTarget.getAttribute('data-dataset-id');
+      loadDataset(id);
+    });
+  }
+
+  // Auto load first
+  if (items.length) {
+    items[0].classList.add('is-active');
+    loadDataset(items[0].getAttribute('data-dataset-id'));
+  }
+
+})();
+</script>
 
 {% endblock %}
