@@ -44,7 +44,7 @@
 
         <!-- Topics (groups facet) -->
         <div class="mma-filter-group">
-          <label class="mma-filter-label">Topics</label>
+          <label class="mma-filter-label">Grupos</label>
           <select class="mma-select mmaFacetSelect" data-facet="groups">
             <option value="">All</option>
             {% if search_facets and search_facets.get('groups') %}
@@ -59,7 +59,7 @@
 
         <!-- Formats (res_format facet) -->
         <div class="mma-filter-group">
-          <label class="mma-filter-label">Formats</label>
+          <label class="mma-filter-label">Formatos</label>
           <select class="mma-select mmaFacetSelect" data-facet="res_format">
             <option value="">All</option>
             {% if search_facets and search_facets.get('res_format') %}
@@ -74,7 +74,7 @@
 
         <!-- Agencies (organization facet) -->
         <div class="mma-filter-group">
-          <label class="mma-filter-label">Agencies</label>
+          <label class="mma-filter-label">Organizaciones</label>
           <select class="mma-select mmaFacetSelect" data-facet="organization">
             <option value="">All</option>
             {% if search_facets and search_facets.get('organization') %}
@@ -89,7 +89,7 @@
 
         <!-- Sort -->
         <div class="mma-filter-group mma-filter-sort">
-          <label class="mma-filter-label">Sort by</label>
+          <label class="mma-filter-label">Orden</label>
           <select class="mma-select" id="mmaSort">
             <option value="score desc, metadata_modified desc"
               {% if current_sort == 'score desc, metadata_modified desc' %}selected{% endif %}>
@@ -112,7 +112,7 @@
 
         <!-- Clear -->
         <a class="mma-clear-filters" href="{{ h.url_for('%s.search' % dataset_type) }}">
-          Clear filters
+          Limpiar Filtros
         </a>
 
       </div>
@@ -247,10 +247,10 @@
 
     // botón principal: primer recurso
     var primaryUrl = '';
-    var primaryLabel = 'Download';
+    var primaryLabel = 'Descarga';
     if (ds.resources && ds.resources.length) {
       primaryUrl = ds.resources[0].url || '';
-      primaryLabel = ds.resources[0].format ? ('Download ' + ds.resources[0].format) : 'Download file';
+      primaryLabel = ds.resources[0].format ? ('Descarga ' + ds.resources[0].format) : 'Descargar Archivo';
     }
 
     var html = '';
@@ -259,7 +259,7 @@
 
     html += '  <div class="mma-ds-topline">';
     html += '    <div class="mma-chip">' + escapeHtml(chip) + '</div>';
-    html += '    <div class="mma-status">Active</div>';
+    html += '    <div class="mma-status">Activo</div>';
     html += '  </div>';
 
     html += '  <h2 class="mma-ds-title">' + escapeHtml(title) + '</h2>';
@@ -273,12 +273,12 @@
 
     html += '  <div class="mma-actions">';
     if (primaryUrl) html += '    <a class="mma-btn mma-btn-primary" href="' + escapeHtml(primaryUrl) + '" target="_blank" rel="noreferrer">' + escapeHtml(primaryLabel) + '</a>';
-    html += '    <a class="mma-btn" href="/dataset/' + escapeHtml(ds.name) + '">Open dataset page</a>';
+    html += '    <a class="mma-btn" href="/dataset/' + escapeHtml(ds.name) + '">Abrir Dataset</a>';
     html += '  </div>';
 
     // Resources
     html += '  <div class="mma-section">';
-    html += '    <h4>Resources</h4>';
+    html += '    <h4>Recursos</h4>';
     if (ds.resources && ds.resources.length) {
       for (var i = 0; i < ds.resources.length; i++) {
         var r = ds.resources[i];
@@ -288,12 +288,12 @@
                 '</div>';
         if (r.description) html += '      <div class="mma-res-desc">' + escapeHtml(r.description) + '</div>';
         html += '      <div class="mma-res-links">';
-        if (r.url) html += '        <a class="mma-link" href="' + escapeHtml(r.url) + '" target="_blank" rel="noreferrer">Open</a>';
+        if (r.url) html += '        <a class="mma-link" href="' + escapeHtml(r.url) + '" target="_blank" rel="noreferrer">Descargar</a>';
         html += '      </div>';
         html += '    </div>';
       }
     } else {
-      html += '    <div class="mma-empty">No resources</div>';
+      html += '    <div class="mma-empty">Sin recursos</div>';
     }
     html += '  </div>';
 
@@ -304,18 +304,18 @@
   async function loadDataset(id) {
     var box = document.getElementById('mmaDetail');
     box.classList.remove('mma-detail-placeholder');
-    box.innerHTML = '<div class="mma-loading">Loading…</div>';
+    box.innerHTML = '<div class="mma-loading">Cargando…</div>';
 
     try {
       var res = await fetch('/api/3/action/package_show?id=' + encodeURIComponent(id), { credentials: 'same-origin' });
       var json = await res.json();
       if (!json || !json.success) {
-        box.innerHTML = '<div class="mma-empty">Could not load dataset</div>';
+        box.innerHTML = '<div class="mma-empty">No se puede cargar el dataset</div>';
         return;
       }
       box.innerHTML = renderDetail(json.result);
     } catch (e) {
-      box.innerHTML = '<div class="mma-empty">Error loading dataset</div>';
+      box.innerHTML = '<div class="mma-empty">Error al cargar el dataset</div>';
     }
   }
 
