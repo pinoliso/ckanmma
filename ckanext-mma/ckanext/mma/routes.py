@@ -43,20 +43,9 @@ mma_blueprint = Blueprint(
     url_prefix='/mma'
 )
 
-@mma_blueprint.route('/')
-def home():
-
-    period = toolkit.request.args.get('period', 'all')
-
-    top_datasets = get_top_datasets(period)
-
-    return toolkit.render(
-        'home/index.html',
-        extra_vars={
-            'top_datasets': top_datasets,
-            'period': period
-        }
-    )
+@mma_blueprint.route('/retc')
+def retc():
+    return toolkit.render('mma/retc.html')
 
 @mma_blueprint.route('/contact', methods=['GET', 'POST'])
 def contact():

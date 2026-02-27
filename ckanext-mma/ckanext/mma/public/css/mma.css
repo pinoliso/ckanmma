@@ -684,3 +684,108 @@ body.dataset.search .container { padding-left: 0 !important; padding-right: 0 !i
 .mma-detail-placeholder { padding: 24px; border: 1px dashed #ddd; border-radius: 14px; color:#666; background:#fff; }
 
 .main { padding: 0px !important; }
+
+.mma-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  overflow: hidden;
+  transition: 0.25s ease;
+  height: 100%;
+  text-align: center !important;
+}
+
+.mma-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+.mma-card-header {
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mma-card-icon {
+  max-height: 70px;
+  max-width: 70px;
+  filter: brightness(0) invert(1);
+}
+
+.mma-card-icon-fallback {
+  font-size: 48px;
+  color: white;
+}
+
+.mma-card-body {
+  padding: 15px;
+}
+
+.mma-card-body h5 {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.mma-card-body p {
+  font-size: 13px;
+  color: #666;
+  min-height: 40px;
+}
+
+.mma-card-footer {
+  padding: 10px 15px;
+  font-size: 12px;
+  color: #555;
+  border-top: 1px solid #eee;
+}
+
+.mma-card-header {
+  height: 160px;
+  overflow: hidden;
+  background: #f3f4f6;
+}
+
+.mma-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.mma-card-fallback {
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #3b82f6;
+  color: white;
+  font-size: 48px;
+}
+
+.mma-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+}
+
+.mma-card-link:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+.mma-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  overflow: hidden;
+  transition: 0.25s ease;
+  height: 100%;
+}
+
+.mma-card-link:hover .mma-card {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}

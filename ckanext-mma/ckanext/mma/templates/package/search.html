@@ -46,10 +46,10 @@
         <div class="mma-filter-group">
           <label class="mma-filter-label">Grupos</label>
           <select class="mma-select mmaFacetSelect" data-facet="groups">
-            <option value="">All</option>
+            <option value="">Todos</option>
             {% if search_facets and search_facets.get('groups') %}
               {% for it in search_facets.get('groups').get('items', []) %}
-                <option value="{{ it.get('name') }}" {% if it.get('active') %}selected{% endif %}>
+                <option value="{{ it.get('name') }}" {% if it.get('name') == request.args.get('groups') %}selected{% endif %}>
                   {{ it.get('display_name', it.get('name')) }}
                 </option>
               {% endfor %}
@@ -61,10 +61,10 @@
         <div class="mma-filter-group">
           <label class="mma-filter-label">Formatos</label>
           <select class="mma-select mmaFacetSelect" data-facet="res_format">
-            <option value="">All</option>
+            <option value="">Todos</option>
             {% if search_facets and search_facets.get('res_format') %}
               {% for it in search_facets.get('res_format').get('items', []) %}
-                <option value="{{ it.get('name') }}" {% if it.get('active') %}selected{% endif %}>
+                <option value="{{ it.get('name') }}" {% if it.get('name') == request.args.get('res_format') %}selected{% endif %}>
                   {{ it.get('display_name', it.get('name')) }}
                 </option>
               {% endfor %}
@@ -76,10 +76,10 @@
         <div class="mma-filter-group">
           <label class="mma-filter-label">Organizaciones</label>
           <select class="mma-select mmaFacetSelect" data-facet="organization">
-            <option value="">All</option>
+            <option value="">Todos</option>
             {% if search_facets and search_facets.get('organization') %}
               {% for it in search_facets.get('organization').get('items', []) %}
-                <option value="{{ it.get('name') }}" {% if it.get('active') %}selected{% endif %}>
+                <option value="{{ it.get('name') }}" {% if it.get('name') == request.args.get('organization') %}selected{% endif %}>
                   {{ it.get('display_name', it.get('name')) }}
                 </option>
               {% endfor %}
@@ -93,19 +93,19 @@
           <select class="mma-select" id="mmaSort">
             <option value="score desc, metadata_modified desc"
               {% if current_sort == 'score desc, metadata_modified desc' %}selected{% endif %}>
-              Relevance
+              Relevancia
             </option>
             <option value="metadata_modified desc"
               {% if current_sort == 'metadata_modified desc' %}selected{% endif %}>
-              Last updated
+              Fecha de actualización
             </option>
             <option value="title_string asc"
               {% if current_sort == 'title_string asc' %}selected{% endif %}>
-              Title (A–Z)
+              Título (A–Z)
             </option>
             <option value="title_string desc"
               {% if current_sort == 'title_string desc' %}selected{% endif %}>
-              Title (Z–A)
+              Título (Z–A)
             </option>
           </select>
         </div>
