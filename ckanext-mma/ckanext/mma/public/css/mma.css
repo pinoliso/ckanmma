@@ -1,11 +1,81 @@
 /* Full width real en la página de búsqueda de datasets */
-body.dataset.search .container,
+body {
+  font-family: 'Roboto', sans-serif !important;
+  font-size: 16px;
+  color: #333333;
+  text-align: left;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  /* font-family: 'Roboto Slab', serif; */
+}
+
+.main {
+  background: none !important;
+}
+
+.btn-primary {
+  background-color: #0f69b4;
+  border-color: #0f69b4;
+}
+
+.btn-secondary {
+  background-color: #dddddd;
+  color: #333;
+}
+
+.container {
+  max-width: 1140px !important;
+  margin: 20px auto;
+}
+
+.mma-header {
+  background: #ffffff;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.mma-header-container {
+  max-width: 1140px !important;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* centra verticalmente el logo derecho */
+  position: relative;
+}
+
+/* Logo MMA */
+.mma-logo-left img {
+  width: 130px;
+  display: block;
+  margin-bottom: 30px; /
+}
+
+/* Logo Proyecto */
+.mma-logo-right {
+  display: flex;
+  align-items: center; /* centrado vertical */
+  justify-content: flex-end;
+  width: 130px !important;
+}
+
+.mma-logo-right img{
+  width: 130px !important;
+}
+
+.mma-site-title {
+  font-family: 'Roboto Slab', serif;
+  font-size: 22px;
+  margin: 0;
+}
+
+/* body.dataset.search .container,
 body.package.search .container {
   max-width: 100% !important;
   width: 100% !important;
   padding-left: 0 !important;
   padding-right: 0 !important;
-}
+} */
 
 /* Quita fondos/bordes típicos del form */
 body.dataset.search .search-form,
@@ -289,11 +359,11 @@ body.dataset.search .module-content {
 .mma-footer {
   background: #223c47;
   color: #fff;
-  padding: 1rem 2rem;
+  padding: 20px 0;
 }
 
 .mma-footer-inner {
-  max-width: 1400px;
+  max-width: 1140px !important;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -474,7 +544,7 @@ body.dataset.search .module-content {
 
 
 /* Full width (quita container del theme) */
-.container { max-width: 100% !important; width: 100% !important; }
+.container { max-width: 1140px !important; width: 100% !important; }
 .container, .wrapper { padding-left: 0 !important; padding-right: 0 !important; }
 
 /* Tu layout */

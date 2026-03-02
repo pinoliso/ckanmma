@@ -2,31 +2,36 @@
 
 {% block header_wrapper %}
 <header class="mma-header">
-  <div class="mma-header-inner">
-
-    <a href="{{ h.url_for('home.index') }}" class="mma-logo">
-      <img
-        src="{{ h.url_for_static('/images/logo.png') }}" class="mma-logo-img"
-        alt="MMA Datos"
-      >
-    </a>
+  <div class="mma-header-container">
+    
+    <!-- Logo MMA -->
+    <div class="mma-logo-left">
+      <a href="{{ h.url_for('home.index') }}">
+        <img src="{{ h.url_for_static('/images/logo-mma2x.png') }}"
+             alt="Ministerio del Medio Ambiente"
+             width="130">
+      </a>
+    </div>
 
     <nav class="mma-nav">
-      <a href="{{ h.url_for('group.index') }}">Grupos</a>
-      <a href="{{ h.url_for('dataset.search') }}">Datasets</a>
-      <a href="/about">¿Qué es el RETC?</a>
-      <a href="/mma/retc">Consolidado del RETC</a>
-      <!-- <a href="{{ h.url_for('organization.index') }}">Organizaciones</a> -->
-      <a href="/mma/contact">Contáctanos</a>
+        <a href="{{ h.url_for('group.index') }}">Grupos</a>
+        <a href="{{ h.url_for('dataset.search') }}">Datasets</a>
+        <a href="/about">¿Qué es el RETC?</a>
+        <a href="/mma/retc">Consolidado del RETC</a>
+        <!-- <a href="{{ h.url_for('organization.index') }}">Organizaciones</a> -->
+        <a href="/mma/contact">Contáctanos</a>
+        {% if c.user %}
+          <a href="{{ h.url_for('dashboard.datasets') }}">Mi cuenta</a>
+          <a href="{{ h.url_for('user.logout') }}">Salir</a>
+        {% else %}
+          <a href="{{ h.url_for('user.login') }}">Ingresar</a>
+        {% endif %}
     </nav>
 
-    <div class="mma-actions">
-      {% if c.user %}
-        <a href="{{ h.url_for('dashboard.datasets') }}"><i class="fa fa-users"></i> Mi cuenta</a>
-        <a href="{{ h.url_for('user.logout') }}"><i class="fa fa-sign-out"></i>Salir</a>
-      {% else %}
-        <a href="{{ h.url_for('user.login') }}">Ingresar</a>
-      {% endif %}
+    <!-- Logo Proyecto -->
+    <div class="mma-logo-right">
+        <img src="{{ h.url_for_static('/images/logo.png') }}"
+             alt="CKAN">
     </div>
 
   </div>
